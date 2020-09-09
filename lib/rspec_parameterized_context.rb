@@ -51,8 +51,8 @@ module RSpecParameterizedContext
       end
     end
 
-    def method_missing(action, *args, **options)
-      @rspec_context.send(action, *args, **options)
+    def method_missing(action, *args, **options, &block)
+      @rspec_context.send(action, *args, **options, &block)
     end
 
     def respond_to_missing?(action, include_private)
