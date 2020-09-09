@@ -3,8 +3,8 @@ require_relative 'lib/rspec_parameterized_context/version'
 Gem::Specification.new do |spec|
   spec.name          = "rspec-parameterized-context"
   spec.version       = RspecParameterizedContext::VERSION
-  spec.authors       = ["alpaca-tc"]
-  spec.email         = ["alpaca-tc@alpaca.tc"]
+  spec.authors       = ["alpaca-tc", "kamillle"]
+  spec.email         = ["alpaca-tc@alpaca.tc", "yuji.kmjm@gmail.com"]
 
   spec.summary       = %q{}
   spec.description   = %q{}
