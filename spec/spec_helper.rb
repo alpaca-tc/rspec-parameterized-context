@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "rspec/parameterized/context"
+require "rspec_parameterized_context"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
