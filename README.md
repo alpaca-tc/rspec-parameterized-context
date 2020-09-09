@@ -1,8 +1,6 @@
 # Rspec::Parameterized::Context
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rspec/parameterized/context`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Generate interfaces like `RSpec::Parameterized` to support parameterized testing that is evaluated in transaction.
 
 ## Installation
 
@@ -12,28 +10,80 @@ Add this line to your application's Gemfile:
 gem 'rspec-parameterized-context'
 ```
 
-And then execute:
+Then add this line to files under `spec/support/`
 
-    $ bundle install
+```ruby
+require 'rspec_parameterized_context'
 
-Or install it yourself as:
-
-    $ gem install rspec-parameterized-context
+RSpec.configure do |config|
+  config.extend RSpecParameterizedContext
+end
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+### syntax
 
-## Development
+Provide interfaces like `RSpec::Parameterized`.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Pass `where` and `with_them` to `parameterized` method as one block and specify parameterized count as `size` keyword argument.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+describe "Addition" do
+  parameterized do
+    where(:a, :b, :answer, size: 3) do
+      [
+        [1 , 2 , 3],
+        [5 , 8 , 13],
+        [0 , 0 , 0]
+      ]
+    end
+
+    with_them do
+      it do
+        expect(a + b).to eq answer
+      end
+    end
+  end
+end
+```
+
+### feature
+
+rspec-parameterized-context supports to evaluate block that given where method in transaction.
+
+```ruby
+# Assume today is 2020/9/9
+describe 'Evaluting block that given to where in transaction' do
+  let(:now) { Date.new(2020, 1, 1) }
+  # And travel to 2020/1/1
+  before { travel_to(now) }
+
+  parameterized do
+    where(:current_on, size: 1) do
+      [
+        [Date.current],
+      ]
+    end
+
+    with_them do
+      it do
+        # current_on is evaluated as 2020/1/1
+        expect(current_on).to eq now
+      end
+    end
+  end
+end
+```
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rspec-parameterized-context. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/rspec-parameterized-context/blob/master/CODE_OF_CONDUCT.md).
-
+- Fork the project.
+- Create feature branch.
+- Commit and push.
+- Make sure to add tests for it.
+- Create pull request.
 
 ## License
 
