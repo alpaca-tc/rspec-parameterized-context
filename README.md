@@ -2,6 +2,8 @@
 
 Generate interfaces like `RSpec::Parameterized` to support parameterized testing that is evaluated in transaction.
 
+Support Ruby 2.5 and later.
+
 ## Installation
 
 Add this line to your application's Gemfile:
