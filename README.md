@@ -10,11 +10,9 @@ Add this line to your application's Gemfile:
 gem 'rspec-parameterized-context'
 ```
 
-Then add this line to files under `spec/support/`
+Then add this lines to files under `spec/support/`
 
 ```ruby
-require 'rspec_parameterized_context'
-
 RSpec.configure do |config|
   config.extend RSpecParameterizedContext
 end
@@ -22,7 +20,7 @@ end
 
 ## Usage
 
-### syntax
+### Syntax
 
 Provide interfaces like `RSpec::Parameterized`.
 
@@ -48,7 +46,7 @@ describe "Addition" do
 end
 ```
 
-### feature
+### Feature
 
 rspec-parameterized-context supports to evaluate block that given where method in transaction.
 
