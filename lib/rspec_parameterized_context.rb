@@ -51,9 +51,15 @@ module RSpecParameterizedContext
       end
     end
 
-    def method_missing(action, *args, **options, &block)
-      @rspec_context.send(action, *args, **options, &block)
+    def method_missing(action, *args, &block)
+      if @rspec_context.respond_to?(action)
+        @rspec_context.public_send(action, *args, &block)
+      else
+        super
+      end
     end
+
+    ruby2_keywords(:method_missing) if respond_to?(:ruby2_keywords, true)
 
     def respond_to_missing?(action, include_private)
       @rspec_context.respond_to?(action, include_private) || super
