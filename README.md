@@ -50,7 +50,7 @@ end
 
 ### Feature
 
-rspec-parameterized-context supports to evaluate block that given where method in transaction.
+- rspec-parameterized-context supports to evaluate block that given where method in transaction.
 
 ```ruby
 # Assume today is 2020/9/9
@@ -76,6 +76,27 @@ describe 'Evaluting block that given to where in transaction' do
 end
 ```
 
+- You can run specific context by focus_index parameter
+
+```ruby
+describe "Addition" do
+  parameterized do
+    where(:a, :b, :answer, size: 3, focus_index: 1) do
+      [
+        [1 , 2 , 3],
+        [5 , 8 , 13], # will run only this context
+        [0 , 0 , 0]
+      ]
+    end
+
+    with_them do
+      it do
+        expect(a + b).to eq answer
+      end
+    end
+  end
+end
+```
 
 ## Contributing
 
