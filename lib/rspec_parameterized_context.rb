@@ -14,6 +14,7 @@ module RSpecParameterizedContext
     def where(*names, size:, focus_index: nil, &block)
       @where_names = names
       @where_size = size
+      @where_focus_index = focus_index
       @where_block = block
     end
 
@@ -28,9 +29,12 @@ module RSpecParameterizedContext
       where_block = @where_block
       where_names = @where_names
       where_size = @where_size
+      where_focus_index = @where_focus_index
       with_them_block = @with_them_block
 
       where_size.times do |index|
+        next if where_focus_index && index != where_focus_index
+
         @rspec_context.context("parameterized phase ##{index}") do
           let(:_parameters) do
             instance_exec(&where_block)
